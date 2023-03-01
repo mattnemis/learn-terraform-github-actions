@@ -31,7 +31,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
   }
 
   filter {
@@ -52,7 +52,7 @@ resource "aws_instance" "web" {
               apt-get update
               apt-get install -y apache2
               sed -i -e 's/80/8080/' /etc/apache2/ports.conf
-              echo "Hello World, I am a t3.micro VM" > /var/www/html/index.html
+              echo "Hello World, I am a t3.micro VM on ${random_pet.sg.id}-sg" > /var/www/html/index.html
               systemctl restart apache2
               EOF
 }
